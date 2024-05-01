@@ -2,9 +2,17 @@ import face_recognition
 import cv2
 import os
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Get the directory of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
 known_faces = []
@@ -15,7 +23,7 @@ known_faces.append(face_recognition.load_image_file(os.path.join(current_dir, "i
 known_faces.append(face_recognition.load_image_file(os.path.join(current_dir, "images/Nevin.jpg")))
 known_faces.append(face_recognition.load_image_file(os.path.join(current_dir, "images/sreejith.jpg")))
 
-known_names = ["Nevin","sreejith","binn"]
+known_names = ["binn","Nevin","sreejith"]
 
 # Encode known faces
 known_encodings = []
